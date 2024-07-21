@@ -8,6 +8,8 @@ import Link from "next/link"
 async function search(term: string) {
   try {
     const res = await Axios("search?keywords=" + term, {
+      // ignore typescript
+      // @ts-ignore
       cache: "no-store",
     })
     return res.data
