@@ -14,9 +14,10 @@ export default function Navbar() {
           </Link>
           <Link
             href="/search"
-            className="bg-slate-50 cursor-pointer rounded-lg h-8 w-8 flex items-center justify-center hover:bg-slate-200 transition-all"
+            className="cursor-pointer flex items-center justify-center gap-2"
           >
             <Search />
+            <p className="text-lg text-slate-600">Search</p>
           </Link>
         </div>
         <div className="mt-2 h-1 w-full bg-slate-50 rounded-full"></div>
