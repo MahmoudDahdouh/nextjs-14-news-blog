@@ -5,10 +5,11 @@ import Link from "next/link"
 import Axios from "@/config/axios"
 import BrokenImage from "@/components/BotkenImage"
 import NewsCards from "@/components/parts/News/NewsCards"
+import PaginationComponent from "./search/PaginationComponent"
 
-async function getHomeData() {
+async function getHomeData(page: number) {
   try {
-    const res = await Axios("latest-news")
+    const res = await Axios(`latest-news?page_number=${page}`)
     return res.data
   } catch (error) {
     console.log(error)
@@ -16,8 +17,15 @@ async function getHomeData() {
   }
 }
 
-export default async function Home() {
-  const data = await getHomeData()
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    page?: string
+  }
+}) {
+  const currentPage = Number(searchParams?.page) || 1
+  const data = await getHomeData(currentPage)
 
   return (
     <main className="mt-4">
@@ -38,6 +46,11 @@ export default async function Home() {
 
         <h2 className="text-4xl mt-12 mb-4 font-bold">Latest News</h2>
         <NewsCards {...data} />
+        <PaginationComponent
+          className="mt-10"
+          currentPage={currentPage}
+          url="/"
+        />
       </div>
     </main>
   )

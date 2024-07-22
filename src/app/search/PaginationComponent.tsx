@@ -10,13 +10,13 @@ import {
 
 export default function PaginationComponent({
   className,
-  currentPage,
+  currentPage = 1,
   searchTerm,
   url,
 }: {
   className?: string
-  currentPage: number
-  searchTerm: string
+  currentPage?: number
+  searchTerm?: string
   url: string
 }) {
   return (
@@ -26,7 +26,7 @@ export default function PaginationComponent({
           <>
             <PaginationItem>
               <PaginationLink
-                href={`${url}?q=${searchTerm}&page=${currentPage}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage)}`}
                 isActive
               >
                 1
@@ -34,14 +34,14 @@ export default function PaginationComponent({
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={`${url}?q=${searchTerm}&page=${currentPage + 1}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage + 1)}`}
               >
                 2
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={`${url}?q=${searchTerm}&page=${currentPage + 2}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage + 2)}`}
               >
                 3
               </PaginationLink>
@@ -53,13 +53,13 @@ export default function PaginationComponent({
           <>
             <PaginationItem>
               <PaginationPrevious
-                href={`${url}?q=${searchTerm}&page=${currentPage - 1}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage - 1)}`}
               />
             </PaginationItem>
 
             <PaginationItem>
               <PaginationLink
-                href={`${url}?q=${searchTerm}&page=${currentPage - 1}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage - 1)}`}
               >
                 {currentPage - 1}
               </PaginationLink>
@@ -67,14 +67,14 @@ export default function PaginationComponent({
             <PaginationItem>
               <PaginationLink
                 isActive
-                href={`${url}?q=${searchTerm}&page=${currentPage}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage)}`}
               >
                 {currentPage}
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={`${url}?q=${searchTerm}&page=${currentPage + 1}`}
+                href={`${url}?${UrlBuilder(searchTerm, currentPage + 1)}`}
               >
                 {currentPage + 1}
               </PaginationLink>
@@ -85,9 +85,18 @@ export default function PaginationComponent({
           <PaginationEllipsis />
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext href="#" />
+          <PaginationNext
+            href={`${url}?${UrlBuilder(searchTerm, currentPage + 1)}`}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
   )
+}
+
+const UrlBuilder = (query: string = "", page: number = 1) => {
+  let url = new URLSearchParams()
+  if (query) url.append("q", query)
+  if (page) url.append("page", page.toString())
+  return url.toString()
 }
