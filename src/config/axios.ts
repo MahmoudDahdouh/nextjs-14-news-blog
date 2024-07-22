@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const Axios = axios.create({
-  baseURL: "https://api.currentsapi.services/v1/",
+  baseURL: process.env.BASE_URL,
   params: {
     apiKey: process.env.API_KEY,
   },
