@@ -4,9 +4,9 @@ import SearchError from "./SearchError"
 import SearchEmptyState from "./SearchEmptyState"
 import SearchInitState from "./SearchInitState"
 
-async function search(term: string) {
+async function search(term: string, page: number = 1) {
   try {
-    const res = await Axios("search?keywords=" + term, {
+    const res = await Axios(`search?keywords=${term}&page_number=${page}`, {
       // ignore typescript
       // @ts-ignore
       cache: "no-store",
@@ -26,13 +26,12 @@ export default async function SearchResults({
 }) {
   let data
   if (query && query.length > 0) {
-    console.log("start search")
-    data = await search(query)
+    data = await search(query, page)
   }
 
   return (
     <>
-      {data.name == "AxiosError" ? (
+      {data?.name == "AxiosError" ? (
         <SearchError />
       ) : !data ? (
         <SearchInitState />
@@ -41,17 +40,6 @@ export default async function SearchResults({
       ) : (
         <SearchEmptyState />
       )}
-      {/* 
-
-         */}
     </>
   )
 }
-/*
-init state
-
-data
-
-
-
-*/

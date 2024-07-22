@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import Search from "./Search"
 import SearchResults from "./SearchResults"
 import LoadingSearch from "./LoadingSearch"
+import PaginationComponent from "./PaginationComponent"
 
 export default function Page({
   searchParams,
@@ -21,6 +22,12 @@ export default function Page({
         <Suspense key={query + currentPage} fallback={<LoadingSearch />}>
           <SearchResults query={query} page={currentPage} />
         </Suspense>
+        <PaginationComponent
+          className="mt-10"
+          currentPage={currentPage}
+          searchTerm={query}
+          url="/search"
+        />
       </div>
     </main>
   )
