@@ -35,7 +35,9 @@ export default function NewsCardItem({
           )}
           <div className="p-2">
             <h3 className="text-xl truncate font-bold">{title}</h3>
-            <p className="line-clamp-3 text-slate-600">{description}</p>
+            <p className="line-clamp-3 text-slate-600 font-sans">
+              {description}
+            </p>
             <div className="flex items-center gap-4 mt-4 truncate">
               <div className="flex items-center gap-1">
                 <User className="text-slate-600" />
